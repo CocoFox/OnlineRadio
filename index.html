@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Radio</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+		
+		.radio, .video{
+			text-align: center;
+		}
+
+		.list-inline-item{
+			width: 20%;
+		}
+
+		.list-inline-item button{
+			padding: 0;
+		}
+
+		.list-inline-item img{
+			width: 100%;
+			height: auto;
+		}
+
+
+	</style>
+
+</head>
+<body>
+
+	<!--<iframe width="420" height="345" src="https://www.youtube.com/embed/uqm19Oqiflc"></iframe>
+
+
+		<iframe src="https://player.twitch.tv/?channel=celiciou" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>-->
+
+		<div class="container">
+			<h1 class="text-center">Radio</h1>
+			<div class="row mb-2">
+				<audio id="player-radio" controls style="width:100%;" src=""></audio>
+			</div>
+			<div class="row">
+				<!--
+				<div class="col-3">
+					<div class="radio">
+						<button role="button" type="button" class="btn btn-outline-primary" link="http://cdn.nrjaudio.fm/adwz1/fr/55524/mp3_128.mp3?origine=fluxradios">Nostalgie</button>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="radio">
+						<button role="button" type="button" class="btn btn-outline-primary" link="http://vr-wr5-mp3-128.scdn.arkena.com/virginradio.mp3">Virgin Radio</button>	
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="radio">
+						<button role="button" type="button" class="btn btn-outline-primary" link="http://direct.franceinter.fr/live/franceinter-lofi.mp3">France Inter</button>	
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="radio">
+						<button role="button" type="button" class="btn btn-outline-primary" link="http://streaming.radio.funradio.fr/fun-1-44-128">Fun Radio</button>	
+					</div>
+				</div>
+			</div>
+			-->
+			<div class="col-4"></div>
+			<div class="col-4">
+				<ul class="list-inline">
+					<li class="list-inline-item radio">
+						<button role="button" type="button" class="btn" link="http://cdn.nrjaudio.fm/adwz1/fr/55524/mp3_128.mp3?origine=fluxradios">
+							<img src="img/nostalgie.jpg">
+						</button>
+					</li>
+					<li class="list-inline-item">
+						<button role="button" type="button" class="btn" link="http://vr-wr5-mp3-128.scdn.arkena.com/virginradio.mp3">
+							<img src="img/virgin.png">
+						</button>
+					</li>
+					<li class="list-inline-item radio">3</li>
+					<li class="list-inline-item radio">4</li>
+					<li class="list-inline-item radio">5</li>
+					<li class="list-inline-item radio">6</li>
+					<li class="list-inline-item radio">7</li>
+					<li class="list-inline-item radio">8</li>
+					<li class="list-inline-item radio">9</li>
+				</ul>
+			</div>
+			<div class="col-4"></div>
+		</div>
+
+		<div class="container">
+			<h1 class="text-center">Video</h1>
+			<div class="row mb-2">
+				<iframe style="width: 60%;" id="player-video" class="mx-auto" src=""></iframe>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<div class="video">
+						<button role="button" type="button" class="btn btn-outline-primary" link="https://www.youtube.com/embed/uqm19Oqiflc?autoplay=true">Jeu en vrac</button>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="video">
+						<button role="button" type="button" class="btn btn-outline-primary" link="https://www.youtube.com/embed/S4Mu5scMyeU?autoplay=true">Best of MV</button>	
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="video">
+						<button role="button" type="button" class="btn btn-outline-primary" link="https://www.youtube.com/embed/lN1Yb0ahe4E?autoplay=true">Que faire quand on s'ennuie</button>	
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="video">
+						<button role="button" type="button" class="btn btn-outline-primary" link="https://www.youtube.com/embed/nt_vhVKigeg?autoplay=true">La Raclette</button>	
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<video controls="">
+			<source src="http://localhost:1234"/>
+		</video>
+
+		<script type="text/javascript">
+
+			$(document).ready(function(){
+
+				$(".radio > button").click(function(){
+					var player = $("#player-radio");
+					var link = $(this).attr("link");
+					player.prop('src', link);
+					player[0].play();
+				});
+
+				$(".video > button").click(function(){
+					var player = $("#player-video");
+					var link = $(this).attr("link");
+					player.prop('src', link);
+				});
+
+				redim();
+				$(window).resize(redim);
+
+			});
+
+			function redim(){
+				var youtubePlayer = $("#player-video");
+				youtubePlayer.height(9 * youtubePlayer.width() / 16);
+			}
+
+		</script>
+
+	</body>
+	</html>
