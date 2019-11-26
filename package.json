@@ -1,0 +1,24 @@
+{
+  "name": "onlineradio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "serve": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CocoFox/OnlineRadio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CocoFox/OnlineRadio/issues"
+  },
+  "homepage": "https://github.com/CocoFox/OnlineRadio#readme"
+}
