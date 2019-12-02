@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-import scrapy
-#from scrapy_selenium.SeleniumRequest
+import scrapy 
+
+from selenium import webdriver
 
 class ToScrapeCSSSpider(scrapy.Spider):
     name = "link-spider"
@@ -8,10 +9,15 @@ class ToScrapeCSSSpider(scrapy.Spider):
         'http://127.0.0.1:8080/',
     ]
 
+    def __init__(self):
+        self.driver = webdriver.Firefox()
+
     def parse(self, response):
-        for url in response.css("li.node"):
+        self.driver.get(response.url)
+        for url in self.driver.find_elements_by_css_selector("li.node"):
             yield {
-                "title": url.css("div.li > a.urlextern::text").extract_first(),
-                "url": url.css("ul.fix-media-list-overlap > li.level2 > div.li > a.urlextern::attr(href)").extract_first()
+                "title": url.value_of_css_property("div.li > a.urlextern::text"),
+                "url": url.value_of_css_property("ul.fix-media-list-overlap > li.level2 > div.li > a.urlextern::attr(href)")
             }
+            
 

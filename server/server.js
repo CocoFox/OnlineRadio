@@ -4,18 +4,23 @@ var express = require('express');
 var server = express();
 var path = require('path');
 
-server.get('/radio', function(request, response) {
+server.get('/radio', function (request, response) {
     response.sendfile(path.resolve('./client/index.html'));
-   
-   
-   });
-   
-   server.get('/json', function(request, response) {
+
+
+});
+
+server.get('/json', function (request, response) {
     const fs = require('fs')
     let fichier = fs.readFileSync('./server/personne.json')
     let personne = JSON.parse(fichier)
-    response.send(personne);    
-    
-   });
+    response.send(personne);
+
+});
+
+server.get('/', function (request, response) {
+    response.sendFile(path.resolve('./server/radios_ubuntu.html'));
+});
+
 
 server.listen(8080);

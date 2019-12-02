@@ -8,6 +8,25 @@
 from scrapy import signals
 
 
+from scrapy import signals
+from scrapy.http import HtmlResponse
+from selenium import webdriver
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
+options.add_argument('window-size=1200x600')
+
+
+
+driver = webdriver.Chrome(chrome_options=options)
+
+
+
+
 class OnlineRadioSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -71,6 +90,14 @@ class OnlineRadioDownloaderMiddleware(object):
     def process_request(self, request, spider):
         # Called for each request that goes through the downloader
         # middleware.
+        # if request.url != 'http://127.0.0.1:8080/':
+        #     return None
+
+        # driver.get(request.url)
+        # WebDriverWait(driver, 10).until(True)
+
+        # body = driver.page_source
+        # return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
 
         # Must either:
         # - return None: continue processing this request
@@ -78,7 +105,18 @@ class OnlineRadioDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
-        return None
+        # return None
+
+        if request.url != 'http://127.0.0.1:8080/':
+            return None
+
+        driver.get(request.url)
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "li.node"))
+        )
+
+        body = driver.page_source
+        return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.

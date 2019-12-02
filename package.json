@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "serve": "live-server"
+    "serve": "node server.js"
   },
   "repository": {
     "type": "git",
