@@ -10,9 +10,9 @@ server.get('/radio', function(request, response) {
    
    });
    
-   server.get('/json', function(request, response) {
+   server.get('/output_n', function(request, response) {
     const fs = require('fs')
-    let fichier = fs.readFileSync('./server/personne.json')
+    let fichier = fs.readFileSync('./online_radio/output_n.json')
     let personne = JSON.parse(fichier)
     response.send(personne);    
     
