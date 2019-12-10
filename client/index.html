@@ -1,54 +1,43 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<title>Radio</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-	<script type="text/javascript" >
+<meta charset="UTF-8">
+<title>Radio</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script type="text/javascript" >
 	$(document).ready(function(){
 		console.log("yo");	
 	 var node =document.getElementById("list_radio");
 		$.get('../output_n', function(data){
-				for (const property in data) {
-					 node.innerHTML +="<li class='list-inline-item radio'>"+
-										"<div class='radio'>"+
-									   " <button role='button' type='button' class='btn'" +
-								   "link='"+ data[property].url+
-								   "' onclick='click(\"test\")'>"  + data[property].title + "</button> </div></li><br> "  
-				}
-		$(".radio > button").click(function(){
+			for (const property in data) {
+				 node.innerHTML +="<li class='list-inline-item radio'>"+
+									"<div class='radio'>"+
+								   " <button role='button' type='button' class='btn'" +
+							   "link='"+ data[property].url+
+							   "' onclick='click(\"test\")'>"  + data[property].title + "</button> </div></li><br> "  
+			}
+
+			$(".radio > button").click(function(){
 			var player = $("#player-radio");
-			var link = $(this).attr("link");
-			player.prop('src', link);
-			player[0].play();
+			var lien = $(this).attr("link");
+			$.post( "/post", { link : lien } );
+			
 			
 		});
-			});
-		 
 		
-
-		
-
-		redim();
-		$(window).resize(redim);
-
 	});
-	
-	function redim(){
-		var youtubePlayer = $("#player-video");
-		youtubePlayer.height(9 * youtubePlayer.width() / 16);
-	}
 
+});
+
+function ajaxPost(lien){
+      
+	
+}
 </script>	
 	<style type="text/css">
-		
-		.radio, .video{
-			text-align: center;
-		}
-
 		.list-inline-item{
 			width: 20%;
 		}
@@ -56,32 +45,29 @@
 		.list-inline-item button{
 			padding: 0;
 		}
-
 		.list-inline-item img{
 			width: 100%;
 			height: auto;
 		}
-
-
 	</style>
-
 </head>
 <body>
 	
 		<div class="container">
 			<h1 class="text-center">Radio</h1>
 			<div class="row mb-2">
+
 				<audio id="player-radio" controls style="width:100%;" src=""></audio>
 			</div>
 			<div class="row">
-			<div class="col-4"></div>
-			<div class="col-4">
-				<ul id ="list_radio" class="list-inline">
-				</ul>
+				<div class="col-4"></div>
+				<div class="col-4">
+					<ul id ="list_radio" class="list-inline">
+					</ul>	
+				</div>
+				<div class="col-4"></div>
 			</div>
-			<div class="col-4"></div>
 		</div>
-
 		
 	
 	</body>
