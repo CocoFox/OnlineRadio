@@ -9,7 +9,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script type="text/javascript" >
 	$(document).ready(function(){
-		console.log("yo");	
 	 var node =document.getElementById("list_radio");
 		$.get('../output_n', function(data){
 			for (const property in data) {
@@ -17,7 +16,7 @@
 									"<div class='radio'>"+
 								   " <button role='button' type='button' class='btn'" +
 							   "link='"+ data[property].url+
-							   "' onclick='click(\"test\")'>"  + data[property].title + "</button> </div></li><br> "  
+							   "' >"  + data[property].title + "</button> </div></li><br> "  
 			}
 
 			$(".radio > button").click(function(){
@@ -28,8 +27,12 @@
 			
 		});
 		
+		
 	});
+	$(".stop > button").click(function(){	
+		$.get( "/stop");
 
+	});
 });
 
 function ajaxPost(lien){
@@ -55,9 +58,8 @@ function ajaxPost(lien){
 	
 		<div class="container">
 			<h1 class="text-center">Radio</h1>
-			<div class="row mb-2">
-
-				<audio id="player-radio" controls style="width:100%;" src=""></audio>
+			<div class="stop">
+				<button type="button"> Stop </button>
 			</div>
 			<div class="row">
 				<div class="col-4"></div>

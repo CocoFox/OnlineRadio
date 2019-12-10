@@ -9,6 +9,7 @@ const fs = require('fs');
 let fichier = fs.readFileSync('./server/output_n.json');
 let links = JSON.parse(fichier);
 var play = 0 ; 
+let pyshell = new PythonShell('.\\server\\vlc\\play_link.py');
 
 server.get('/radio', function (request, response) {
     response.sendfile(path.resolve('./client/index.html'));
@@ -20,28 +21,21 @@ server.get('/radio', function (request, response) {
   
 server.use(bodyParser.json() );
 server.use(bodyParser.urlencoded({extended: true }));
-
-server.get('/run', runPy);
+server.get('/stop', function(){
+  pyshell.send("stop");
+});
 server.post('/post',function (request,response){
        //response.sendfile(path.resolve('./client/index.html'))
-       runPy(request.body.link,response);
-       console.log(request.body.link);  
+       sendLink(request.body.link,response);
 
    })
 
 
-function runPy(link,res){
-        var options = {
-            args:
-            [
-              play=1, // starting funds
-              link, // wager count — number of wagers per sim
-            ]
-          }
-          PythonShell.run('.\\server\\vlc\\play_link.py', options, function (err, data) {
+function sendLink(link,res){
+        
+          pyshell.send(link, function (err, data) {
         if (err){
           res.send(err);
-          console.log(err);
         }
       })};
 
