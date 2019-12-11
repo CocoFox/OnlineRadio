@@ -1,5 +1,6 @@
 var http = require('http');
-
+var cp = require('child_process')
+var vlcCommand = require('vlc-command')
 var express = require('express');
 var server = express();
 var path = require('path');
@@ -14,10 +15,6 @@ let pyshell_tab = [];
 
 server.get('/radio', function (request, response) {
   response.sendfile(path.resolve('./client/index.html'));
-  pyshell.on('message', function (message) {
-    // received a message sent from the Python script (a simple "print" statement)
-    console.log(message);
-  });
 });
 
 
@@ -38,13 +35,7 @@ server.post('/post',function (request,response){
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
-server.get('/stop', function () {
-  pyshell.send("stop");
-  pyshell.on('message', function (message) {
-    // received a message sent from the Python script (a simple "print" statement)
-    console.log(message);
-  });
-});
+
 function open(link,name,res){
         let pyshell= new PythonShell('./server/vlc/play_link.py');
         pyshell_tab.push([pyshell,name]);
@@ -66,4 +57,20 @@ function searchInstance(name){
   });
 
   };
+vlcCommand(function (err, cmd) {
+  if (err) return console.error('could not find vlc command path')
+  if (process.platform === 'win32') {
+    cp.execFile(cmd, ['--version'], function (err, stdout) {
+      if (err) return console.error(err)
+      console.log(stdout)
+    })
+  } else {
+    cp.exec(cmd + ' --version', function (err, stdout) {
+      if (err) return console.error(err)
+      console.log(stdout)
+    })
+  }
+  
+})
+
 server.listen(8080);
