@@ -1,5 +1,6 @@
 var http = require('http');
-
+var cp = require('child_process')
+var vlcCommand = require('vlc-command')
 var express = require('express');
 var server = express();
 var path = require('path');
