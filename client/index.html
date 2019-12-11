@@ -27,7 +27,11 @@ var last_radio_played;
 			var lien = $(this).attr("link");
 			var nom = $(this).attr("name");
 			last_radio_played=nom;
-			$.post( "/post", { link : lien , name : nom } );
+			$.post( "/post", { link : lien , name : nom } ).done(function(data){
+				console.log(data.p);
+				player.prop('src',"localhost:"+data.p); //source link
+				player[0].play();
+			});
 			
 			
 		});
@@ -63,6 +67,7 @@ function ajaxPost(lien){
 	
 		<div class="container">
 			<h1 class="text-center">Radio</h1>
+			<div><audio id="player-radio" controls style="width:100%;" src=""></audio></div>
 			<div class="stop">
 				<button type="button"> Stop </button>
 			</div>
