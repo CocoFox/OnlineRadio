@@ -3,7 +3,7 @@ var http = require('http');
 var express = require('express');
 var server = express();
 var path = require('path');
-let {PythonShell} = require('python-shell')
+let { PythonShell } = require('python-shell')
 var bodyParser = require('body-parser');
 const fs = require('fs');
 let fichier = fs.readFileSync('./server/output_n.json');
@@ -13,26 +13,38 @@ let pyshell_tab = [];
 
 
 server.get('/radio', function (request, response) {
-    response.sendfile(path.resolve('./client/index.html'));
-   });
-   
-   server.get('/output_n', function(request, response) {
-    response.send(links);
+  response.sendfile(path.resolve('./client/index.html'));
+  pyshell.on('message', function (message) {
+    // received a message sent from the Python script (a simple "print" statement)
+    console.log(message);
+  });
 });
-  
+
+
+server.get('/output_n', function (request, response) {
+  response.send(links);
+});
 server.use(bodyParser.json() );
 server.use(bodyParser.urlencoded({extended: true }));
 server.post('/stop',function (request,response){
   //response.sendfile(path.resolve('./client/index.html'))
   stop(request.body.name,response);
-})
+});
 server.post('/post',function (request,response){
        //response.sendfile(path.resolve('./client/index.html'))
        open(request.body.link, request.body.name,response);
 
-   })
+   });
 
-
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.get('/stop', function () {
+  pyshell.send("stop");
+  pyshell.on('message', function (message) {
+    // received a message sent from the Python script (a simple "print" statement)
+    console.log(message);
+  });
+});
 function open(link,name,res){
         let pyshell= new PythonShell('./server/vlc/play_link.py');
         pyshell_tab.push([pyshell,name]);
@@ -53,7 +65,5 @@ function searchInstance(name){
     if(element[1]==name){ return element};
   });
 
-}
+  };
 server.listen(8080);
-
-//aze
