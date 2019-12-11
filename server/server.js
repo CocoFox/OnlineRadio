@@ -9,7 +9,8 @@ const fs = require('fs');
 let fichier = fs.readFileSync('./server/output_n.json');
 let links = JSON.parse(fichier);
 var play = 0 ; 
-let pyshell = new PythonShell('.\\server\\vlc\\play_link.py');
+let pyshell_tab = [];
+
 
 server.get('/radio', function (request, response) {
     response.sendfile(path.resolve('./client/index.html'));
@@ -21,24 +22,38 @@ server.get('/radio', function (request, response) {
   
 server.use(bodyParser.json() );
 server.use(bodyParser.urlencoded({extended: true }));
-server.get('/stop', function(){
-  pyshell.send("stop");
-});
+server.post('/stop',function (request,response){
+  //response.sendfile(path.resolve('./client/index.html'))
+  stop(request.body.name,response);
+})
 server.post('/post',function (request,response){
        //response.sendfile(path.resolve('./client/index.html'))
-       sendLink(request.body.link,response);
+       open(request.body.link, request.body.name,response);
 
    })
 
 
-function sendLink(link,res){
-        
+function open(link,name,res){
+        let pyshell= new PythonShell('./server/vlc/play_link.py');
+        pyshell_tab.push([pyshell,name]);
           pyshell.send(link, function (err, data) {
         if (err){
           res.send(err);
         }
       })};
+function stop(name,res){
+        
+          searchInstance(name).send("stop", function (err, data) {
+        if (err){
+          res.send(err);
+        }
+      })};
+function searchInstance(name){
+  pyshell_tab.foreach(element=> {
+    if(element[1]==name){ return element};
+  });
 
+}
 server.listen(8080);
 
 //aze

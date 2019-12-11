@@ -8,6 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script type="text/javascript" >
+var last_radio_played;
+
+
 	$(document).ready(function(){
 	 var node =document.getElementById("list_radio");
 		$.get('../output_n', function(data){
@@ -16,13 +19,15 @@
 									"<div class='radio'>"+
 								   " <button role='button' type='button' class='btn'" +
 							   "link='"+ data[property].url+
-							   "' >"  + data[property].title + "</button> </div></li><br> "  
+							   "' name = '" + data[property].title +"' >"  + data[property].title + "</button> </div></li><br> "  
 			}
 
 			$(".radio > button").click(function(){
 			var player = $("#player-radio");
 			var lien = $(this).attr("link");
-			$.post( "/post", { link : lien } );
+			var nom = $(this).attr("name");
+			last_radio_played=nom;
+			$.post( "/post", { link : lien , name : nom } );
 			
 			
 		});
@@ -30,7 +35,7 @@
 		
 	});
 	$(".stop > button").click(function(){	
-		$.get( "/stop");
+		$.post("/stop", {name : last_radio_played });
 
 	});
 });
