@@ -17,7 +17,8 @@ var http = require('http');
 var port = 9000;
 let tab_openedlinks = [];
 var nb_port=0;
-/*vlcCommand(function (err, command) {
+/*
+vlcCommand(function (err, command) {
   if (err) throw err
   if (process.platform === 'win32') {
     cp.execFile(command, onExit)
@@ -26,11 +27,13 @@ var nb_port=0;
   }
 });*/
 
+console.log(tab_openedlinks);
 function onExit (err, stdout, stderr) {
   console.log(stdout)
   console.error(stderr)
-  if (err) throw err
-};
+  if (err) 
+    console.log(err);
+  };
 
 
 server.get('/radio', function (request, response) {
@@ -75,9 +78,9 @@ function open(link,res){
     vlcCommand(function (err) {
       if (err) throw err
       if (process.platform === 'win32') {
-        cp.execFile("vlc -vvv " + link + "--sout '#standart { access = http, mux= ogg, dst=localhost: " + port + "}'" , onExit)
+        cp.execFile("vlc -vvv " + link + "--sout '#standart { access = http, mux= ogg, dst=localhost: "+port+ "}'" , onExit)
       } else {
-        cp.exec("vlc -vvv " + link + "--sout '#standart { access = http, mux= ogg, dst=localhost: " + port + "}'" , onExit)
+        cp.exec("vlc -vvv " + link + "--sout '#standart { access = http, mux= ogg, dst=localhost: " +port+"}'" , onExit)
       }
     });
     function sleep(ms) {
@@ -90,7 +93,7 @@ function open(link,res){
       console.log('Two seconds later, showing sleep in a loop...');
       // Sleep in loop
       for (let i = 0; i < 3; i++) {
-        if (i === 3)
+        if (i === 2)
           await sleep(2000);
         console.log(i);
       }
