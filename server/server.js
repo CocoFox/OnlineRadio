@@ -78,9 +78,9 @@ function open(link,res){
         var arg = '#standart { access = http, mux= mp3, dst=localhost:' +port+ '}';
         var opt =  '--sout';
         var vlcexec = "vlc -vvv" + link + opt + arg;
-        cp.execFile(vlcexec , onExit);
+        cp.execFile(vlcexec, onExit);
       } else {
-        cp.exec("vlc -vvv " + link + " --sout '#standart { access = http, mux= mp3, dst=localhost:" +port+"}'" , onExit)
+        cp.exec(vlcexec, onExit)
       }
     });
     function sleep(ms) {
