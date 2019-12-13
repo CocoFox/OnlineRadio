@@ -1,4 +1,3 @@
-var http = require('http');
 var express = require('express');
 var server = express();
 var path = require('path');
@@ -76,9 +75,12 @@ function open(link,res){
     vlcCommand(function (err) {
       if (err) throw err
       if (process.platform === 'win32') {
-        cp.execFile("vlc -vvv " + link + " --sout '#standart { access = http, mux= mp3, dst=localhost: "+port+ "}'" , onExit)
+        var arg = '#standart { access = http, mux= mp3, dst=localhost:' +port+ '}';
+        var opt =  '--sout';
+        var vlcexec = "vlc -vvv" + link + opt + arg;
+        cp.execFile(vlcexec , onExit);
       } else {
-        cp.exec("vlc -vvv " + link + " --sout '#standart { access = http, mux= mp3, dst=localhost: " +port+"}'" , onExit)
+        cp.exec("vlc -vvv " + link + " --sout '#standart { access = http, mux= mp3, dst=localhost:" +port+"}'" , onExit)
       }
     });
     function sleep(ms) {
