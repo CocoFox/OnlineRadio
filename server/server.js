@@ -1,6 +1,4 @@
 var http = require('http');
-var cp = require('child_process')
-var vlcCommand = require('vlc-command')
 var express = require('express');
 var server = express();
 var path = require('path');
@@ -78,9 +76,9 @@ function open(link,res){
     vlcCommand(function (err) {
       if (err) throw err
       if (process.platform === 'win32') {
-        cp.execFile("vlc -vvv " + link + "--sout '#standart { access = http, mux= ogg, dst=localhost: "+port+ "}'" , onExit)
+        cp.execFile("vlc -vvv " + link + " --sout '#standart { access = http, mux= mp3, dst=localhost: "+port+ "}'" , onExit)
       } else {
-        cp.exec("vlc -vvv " + link + "--sout '#standart { access = http, mux= ogg, dst=localhost: " +port+"}'" , onExit)
+        cp.exec("vlc -vvv " + link + " --sout '#standart { access = http, mux= mp3, dst=localhost: " +port+"}'" , onExit)
       }
     });
     function sleep(ms) {
