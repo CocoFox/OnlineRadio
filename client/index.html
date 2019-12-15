@@ -9,7 +9,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script type="text/javascript" >
 var last_radio_played;
-
+var player;
 
 	$(document).ready(function(){
 	 var node =document.getElementById("list_radio");
@@ -23,13 +23,17 @@ var last_radio_played;
 			}
 
 			$(".radio > button").click(function(){
-			var player = $("#player-radio");
+			player = $("#player-radio");
 			var lien = $(this).attr("link");
 			var nom = $(this).attr("name");
 			last_radio_played=nom;
 			$.post( "/post", { link : lien , name : nom } ).done(function(data){
 				console.log(data.p);
-				player.prop('src',"localhost:"+data.p); //source link
+				
+
+
+
+				player.prop('src',"http://localhost:"+data.p); //source link
 				player[0].play();
 			});
 			
@@ -37,10 +41,6 @@ var last_radio_played;
 		});
 		
 		
-	});
-	$(".stop > button").click(function(){	
-		$.post("/stop", {name : last_radio_played });
-
 	});
 });
 
@@ -69,7 +69,6 @@ function ajaxPost(lien){
 			<h1 class="text-center">Radio</h1>
 			<div><audio id="player-radio" controls style="width:100%;" src=""></audio></div>
 			<div class="stop">
-				<button type="button"> Stop </button>
 			</div>
 			<div class="row">
 				<div class="col-4"></div>

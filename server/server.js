@@ -1,18 +1,17 @@
 var express = require('express');
 var server = express();
 var path = require('path');
-let { PythonShell } = require('python-shell')
 var bodyParser = require('body-parser');
 const fs = require('fs');
-let fichier = fs.readFileSync('./server/output_n.json');
-let links = JSON.parse(fichier);
+var fichier = fs.readFileSync('./server/output_n.json');
+var links = JSON.parse(fichier);
 var play = 0 ; 
-let pyshell_tab = [];
+var pyshell_tab = [];
 var vlcCommand = require('vlc-command');
 var cp = require('child_process');
 var http = require('http');
 var port = 9000;
-let tab_openedlinks = [];
+var tab_openedlinks = [];
 var nb_port=0;
 /*
 vlcCommand(function (err, command) {
@@ -34,7 +33,12 @@ function onExit (err, stdout, stderr) {
 
 
 server.get('/radio', function (request, response) {
+  console.log(`This platform is ${process.platform}`);
+
+
   response.sendfile(path.resolve('./client/index.html'));
+  
+
   // pyshell.on('message', function (message) {
   //   // received a message sent from the Python script (a simple "print" statement)
   //   console.log(message);
@@ -73,37 +77,27 @@ function open(link,res){
   else {
     tab_openedlinks[link]=port;
     vlcCommand(function (err) {
+      var arg = "'#transcode{acodec=mp3,ab=128,channels=2,samplerate=44100}:std { access = http, mux= mp3, dst=localhost:" +port+ "}'";
+      var opt =  "--sout";
+      var vlcexec = "vlc -vvv " + link + " " +opt +" " + arg;
       if (err) throw err
-      if (process.platform === 'win32') {
-        var arg = '#standart { access = http, mux= mp3, dst=localhost:' +port+ '}';
-        var opt =  '--sout';
-        var vlcexec = "vlc -vvv" + link + opt + arg;
+      if (process.platform === 'win32') { 
+        
         cp.execFile(vlcexec, onExit);
       } else {
         cp.exec(vlcexec, onExit)
       }
     });
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
     
-    async function demo() {
-      console.log('Taking a break...');
-      await sleep(2000);
-      console.log('Two seconds later, showing sleep in a loop...');
-      // Sleep in loop
-      for (let i = 0; i < 3; i++) {
-        if (i === 2)
-          await sleep(2000);
-        console.log(i);
-      }
-    }
-    demo();
 
-
-    var response={ p : port}
+    setTimeout(function(){
+      var response={ p : port}
     res.send(response);
     port++;
+    
+    },2000);
+
+   
   }
         /*let pyshell= new PythonShell('./server/vlc/play_link.py');
         pyshell_tab.push([pyshell,name]);
