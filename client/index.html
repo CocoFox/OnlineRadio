@@ -21,18 +21,12 @@ var player;
 							   "link='"+ data[property].url+
 							   "' name = '" + data[property].title +"' >"  + data[property].title + "</button> </div></li><br> "  
 			}
-
 			$(".radio > button").click(function(){
 			player = $("#player-radio");
 			var lien = $(this).attr("link");
 			var nom = $(this).attr("name");
 			last_radio_played=nom;
 			$.post( "/post", { link : lien , name : nom } ).done(function(data){
-				console.log(data.p);
-				
-
-
-
 				player.prop('src',"http://localhost:"+data.p); //source link
 				player[0].play();
 			});
@@ -44,10 +38,6 @@ var player;
 	});
 });
 
-function ajaxPost(lien){
-      
-	
-}
 </script>	
 	<style type="text/css">
 		.list-inline-item{

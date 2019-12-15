@@ -67,12 +67,9 @@ server.use(bodyParser.urlencoded({ extended: true }));
 function open(link,res){
 
   var port_temp=searchLink(link);
-  console.log("port temp" + port_temp);
-  
   if (port_temp){
     var response={ p : port_temp}
     res.send(response)
-    
   }
   else {
     tab_openedlinks[link]=port;
@@ -88,32 +85,13 @@ function open(link,res){
         cp.exec(vlcexec, onExit)
       }
     });
-    
-
     setTimeout(function(){
       var response={ p : port}
-    res.send(response);
-    port++;
-    
-    },2000);
-
-   
+      res.send(response);
+      port++;
+    },2000);   
   }
-        /*let pyshell= new PythonShell('./server/vlc/play_link.py');
-        pyshell_tab.push([pyshell,name]);
-          pyshell.send(link, function (err, data) {
-        if (err){
-          res.send(err);
-        }
-      })*/
-    };
-function stop(name,res){
-        
-          searchInstance(name).send("stop", function (err, data) {
-        if (err){
-          res.send(err);
-        }
-      })};
+};
 function searchLink(link){
 
   for (var key_link in tab_openedlinks){
